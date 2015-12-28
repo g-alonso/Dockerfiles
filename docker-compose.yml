@@ -1,0 +1,16 @@
+web:
+  image: phpache:latest
+  ports:
+   - "8080:8080"
+  volumes:
+   - /home/gabriel/dvlp/projects:/var/www
+  links:
+   - db
+db:
+  image: mysql:latest
+  ports:
+   - "3306:3306"
+  volumes:
+    - /home/gabriel/dvlp/databases/mysql:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: 123
