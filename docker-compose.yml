@@ -1,16 +1,21 @@
-web:
-  image: phpache:latest
-  ports:
-   - "8080:8080"
-  volumes:
-   - /home/gabriel/dvlp/projects:/var/www
-  links:
-   - db
-db:
-  image: mysql:latest
-  ports:
-   - "3306:3306"
-  volumes:
-    - /home/gabriel/dvlp/databases/mysql:/var/lib/mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: 123
+version: '2'
+
+services:
+  galonso.php7: 
+    image: galonso/php:7.0.4
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/galonso/dvlp/projects/myproject_vhost.conf:/www/httpd.conf.d/myproject_vhost.conf
+      - /home/galonso/dvlp/projects/myproject:/www/htdocs/myproject
+    links:
+      - galonso.mysql:db
+    container_name: development
+    
+  galonso.mysql:
+    image: galonso/mysql:latest
+    environment:
+     - MYSQL_ROOT_PASSWORD=123
+    ports:
+      - "3306:3306"
+    container_name: galonso.mysql
